@@ -37,15 +37,18 @@
     document.addEventListener("DOMContentLoaded", function () {
         if (window.Echo) {
             console.log('window.Echo', window.Echo);
+            console.log('App.Models.User.', 'App.Models.User.' + {{ auth()->id() }});
 
             window.Echo.private('App.Models.User.' + {{ auth()->id() }})
                 .notification((notification) => {
                     console.log(notification);
+                    alert(notification.title)
                 });
 
             window.Echo.private('App.Models.User.' + {{ auth()->id() }})
                 .listen('OrderShipmentStatusUpdated', (event) => {
                     console.log(event);
+                    alert('Order shipment status updated');
                 });
 
         } else {

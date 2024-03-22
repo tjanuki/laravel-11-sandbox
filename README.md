@@ -64,3 +64,35 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+## Setup memo
+- build dev environment
+```
+vite
+```
+
+- start reverb
+```
+php artisan reverb:start
+```
+
+- start queue worker
+```
+php artisan queue:work
+```
+
+- send events
+```
+php artisan tinker
+
+> App\Events\OrderShipmentStatusUpdated::dispatch(App\Models\Order::find(2));
+```
+
+- send notifications
+```
+php artisan tinker
+
+> User::find(2)->notify(new App\Notifications\OrderShipped(App\Models\Order::find(2)));
+```
+
