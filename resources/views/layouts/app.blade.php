@@ -36,25 +36,18 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         if (window.Echo) {
-            window.Echo.private('App.Models.User.' + {{ auth()->id() }})
-                .notification((notification) => {
-                    console.log(notification);
-                });
-            // window.Echo.connector.pusher.connection.bind('connected', function () {
-            //     console.log('connected');
-
-
             console.log('window.Echo', window.Echo);
+
             window.Echo.private('App.Models.User.' + {{ auth()->id() }})
                 .notification((notification) => {
                     console.log(notification);
                 });
 
-            window.Echo.private('App.Models.Order.' + 1)
-                .listen('OrderShipmentStatusUpdated', (e) => {
-                    console.log(e.order);
+            window.Echo.private('App.Models.User.' + {{ auth()->id() }})
+                .listen('OrderShipmentStatusUpdated', (event) => {
+                    console.log(event);
                 });
-            // });
+
         } else {
             console.error("Echo is not initialized");
         }
