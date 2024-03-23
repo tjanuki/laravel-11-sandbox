@@ -1,0 +1,48 @@
+name: Code Quality and Auto-Commit Fixes
+
+on:
+  push:
+    branches:
+      - '**'
+#    paths-ignore:
+#      - '**' # 除外したいパスがあればここへ追加
+  pull_request:
+    branches:
+      - main
+#    paths-ignore:
+#      - '**' # 除外したいパスがあればここへ追加
+
+jobs:
+  lint-and-format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, pdo_mysql
+          tools: composer, prestissimo
+
+      - name: Install PHP Dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+        working-directory: ./backend
+
+      - name: Run Laravel Pint for auto-fixes
+        run: ./vendor/bin/pint
+        working-directory: ./backend
+
+      - name: Configure Git
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+
+      - name: Commit and Push Changes
+        run: |
+          git add .
+          git diff-index --quiet HEAD || git commit -m "Apply ESLint and Laravel Pint fixes [skip ci]"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
