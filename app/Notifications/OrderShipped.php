@@ -7,7 +7,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
 
-class OrderShipped extends Notification {
+class OrderShipped extends Notification
+{
     use Queueable;
 
     /**
