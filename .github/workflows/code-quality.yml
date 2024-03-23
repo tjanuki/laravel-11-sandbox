@@ -46,5 +46,3 @@ jobs:
           git commit -m "Apply ESLint and Laravel Pint fixes [skip ci]" || true  # Proceed even if there's nothing to commit
           BRANCH_NAME=${GITHUB_REF#refs/heads/}
           git push origin HEAD:$BRANCH_NAME
-        env:
-          GH_PAT_TOKEN: ${{ secrets.GH_PAT_TOKEN }}
