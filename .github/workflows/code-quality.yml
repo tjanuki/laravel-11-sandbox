@@ -40,7 +40,8 @@ jobs:
       - name: Commit and Push Changes
         run: |
           git add .
-          git diff-index --quiet HEAD || git commit -m "Apply ESLint and Laravel Pint fixes [skip ci]"
-          git push
+          git commit -m "Apply ESLint and Laravel Pint fixes [skip ci]" || true  # Proceed even if there's nothing to commit
+          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT_TOKEN }}@github.com/tjanuki/laravel-11-sandbox.git
+          git push origin HEAD:main
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT_TOKEN }}
+          GH_PAT_TOKEN: ${{ secrets.GH_PAT_TOKEN }}
