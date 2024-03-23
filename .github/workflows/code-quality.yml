@@ -43,4 +43,4 @@ jobs:
           git diff-index --quiet HEAD || git commit -m "Apply ESLint and Laravel Pint fixes [skip ci]"
           git push
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT_TOKEN }}
