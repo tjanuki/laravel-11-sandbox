@@ -38,9 +38,17 @@ jobs:
           git config --global user.name "GitHub Action"
 
       - name: Commit and Push Changes
-        run: |
-          git add .
-          git commit -m "Apply ESLint and Laravel Pint fixes [skip ci]" || true  # Proceed even if there's nothing to commit
-          git push origin HEAD:main
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'Apply ESLint and Laravel Pint fixes [skip ci]'
+          branch: ${{ github.head_ref }}
+          file_pattern: .
+          repository: .
+          commit_options: '--no-verify --signoff'
+          commit_user_name: 'GitHub Action'
+          commit_user_email: 'action@github.com'
+          commit_author: 'GitHub Action <action@github.com>'
+          push_options: ''
         env:
-          GH_PAT_TOKEN: ${{ secrets.GH_PAT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT_TOKEN }}
+
